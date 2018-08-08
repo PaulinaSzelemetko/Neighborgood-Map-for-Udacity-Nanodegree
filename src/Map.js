@@ -25,8 +25,18 @@ class Map extends Component{
     return markerImage;
   }
 
-  
-
+//NOWA FUNKCJA
+  populateInfoWindow(marker, infowindow) {
+    if (infowindow.marker != marker) {
+      infowindow.marker = marker;
+      infowindow.setContent('<div>' + marker.title + '</div>');
+      infowindow.open();
+      infowindow.addListener('closeclick',function(){
+        infowindow.setMarker = null;
+      });
+    }
+    return infowindow;
+  }
 
   componentWillReceiveProps({isScriptLoadSucceed}){
     if (isScriptLoadSucceed) {
@@ -42,6 +52,8 @@ class Map extends Component{
 
   //add markers and events on them (changing color)
   var markers = [];
+  //NOWA ZMIENNA
+  var infowindow = new window.google.maps.InfoWindow();
   var defaultIcon = this.makeMarkerIcon('0091ff');
   var highlightedIcon = this.makeMarkerIcon('FFFF24');    
   this.props.locations.map(location => {
@@ -55,6 +67,11 @@ class Map extends Component{
     });
     
     markers.push(marker);
+
+    //NOWY CLICK
+    marker.addListener('click', function() {
+      this.populateInfoWindow(this, infowindow); 
+    });
 
     marker.addListener('mouseover', function() {
       this.setIcon(highlightedIcon);
