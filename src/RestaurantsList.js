@@ -11,36 +11,29 @@ class RestaurantsList extends Component{
      }     
 
 
-     state = {
-        query: ''
-    }
-
-    updateQuery = (query) => {
-        this.setState({ query: query.trim() })
-    }
-
-
     render(){
         let showingRestaurants
-        if (this.state.query) {
-            const match = new RegExp(escapeRegExp(this.state.query), 'i' )
-            showingRestaurants = this.props.locations.filter((location) => match.test(location.title))
+        if (this.props.query) {
+            const match = new RegExp(escapeRegExp(this.props.query), 'i' )
+            showingRestaurants = this.props.locations.filter((location) => match.test(location.title));
         } else {
             showingRestaurants = this.props.locations
         }
 
 
+        const updateQuery = this.props.updateQuery;
+
     return(
        
        <div id="list">
-            <h3>5 best restaurants in Warsaw</h3>
+            <h3>10 best restaurants in Warsaw</h3>
             <div id="searching">
                 <input 
                     id ="input" 
                     type="text" 
                     placeholder="Filter..." 
-                    value={this.state.query} 
-                    onChange ={(event) => this.updateQuery(event.target.value)}/>
+                    value={this.props.query} 
+                    onChange ={(event) => updateQuery(event.target.value)}/>
             </div>
 
             <ul id="restaurants">

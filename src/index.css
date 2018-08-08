@@ -25,10 +25,11 @@ h3 {
   color: white;
   font-weight: 50;
   font-size: 1.2em;
+  padding: 15px 0;
 }
 
 #input {
-  width: 245px;
+  width: 255px;
 }
 
 ul, li {

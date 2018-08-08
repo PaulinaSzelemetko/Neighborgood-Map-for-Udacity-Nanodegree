@@ -26,60 +26,66 @@ class Map extends Component{
   }
 
 
-  componentWillReceiveProps({isScriptLoadSucceed}){
-    if (isScriptLoadSucceed) {
+  componentWillReceiveProps(newProps){
+    if (newProps.isScriptLoadSucceed) {
     
-  //loading map 
-    var map = new window.google.maps.Map(document.getElementById('map'), {
-      zoom: 13,
-      center: {lat: 52.243025, lng: 21.014490}
-    });  
-  } else {
-    alert("script not loaded")
-  }       
+    //loading map 
+      var map = new window.google.maps.Map(document.getElementById('map'), {
+        zoom: 12.8,
+        center: {lat: 52.226972, lng: 21.003192}
+      });  
+      //add info windows
+      const populateInfoWindow = (marker, infowindow) => {
+        if (infowindow.marker != marker) {
+          infowindow.marker = marker;
+          infowindow.setContent('<div>' + marker.name + '</div>');
+          infowindow.open(map, marker);
+  
+          infowindow.addListener('closeclick', function(){
+            infowindow.setMarker = null;
+          });
+        }
+      }
+  
+      //add markers and events on them 
+      var markers = [];
+      var infowindow = new window.google.maps.InfoWindow();
+      var defaultIcon = this.makeMarkerIcon('0091ff');
+      var highlightedIcon = this.makeMarkerIcon('FFFF24');   
+      var query = newProps.query;
+  
+      this.props.locations.filter((location) =>  {
+        console.log(query)
+        if(query === '') {
+           return true;
+        }
+        return location.title.toLowerCase().includes(query.toLowerCase())
+      }).map(location => {
+        var marker = new window.google.maps.Marker({
+          position: location.location,
+          name : location.title,
+          map: map,
+          icon: defaultIcon,
+          animation: window.google.maps.Animation.DROP
+        });
+              
+        marker.addListener('click', function() {
+          populateInfoWindow(this, infowindow); 
+        });
+        
+        marker.addListener('mouseover', function() {
+          this.setIcon(highlightedIcon);
+        });
+        marker.addListener('mouseout', function() {
+          this.setIcon(defaultIcon);
+          
+        //markers.push(marker);
+        })
+      })
+    } else {
+      alert("script not loaded")
+    }       
 
-
-  const populateInfoWindow = (marker, infowindow) => {
-    if (infowindow.marker != marker) {
-      infowindow.marker = marker;
-      infowindow.setContent('<div>' + marker.name + '</div>');
-      infowindow.open(map, marker);
-      infowindow.addListener('closeclick',function(){
-        infowindow.setMarker = null;
-      });
-    }
-  }
-
-  //add markers and events on them (changing color)
-  var markers = [];
-  //NOWA ZMIENNA
-  var infowindow = new window.google.maps.InfoWindow();
-  var defaultIcon = this.makeMarkerIcon('0091ff');
-  var highlightedIcon = this.makeMarkerIcon('FFFF24');    
-  this.props.locations.map(location => {
-    
-    var marker = new window.google.maps.Marker({
-      position: location.location,
-      name : location.title,
-      map: map,
-      icon: defaultIcon,
-      animation: window.google.maps.Animation.DROP,
-    });
-    
-    markers.push(marker);
-
-    //NOWY CLICK
-    marker.addListener('click', function() {
-      populateInfoWindow(this, infowindow); 
-    });
-
-    marker.addListener('mouseover', function() {
-      this.setIcon(highlightedIcon);
-    });
-    marker.addListener('mouseout', function() {
-      this.setIcon(defaultIcon);
-  })
-  })
   }
         
 
