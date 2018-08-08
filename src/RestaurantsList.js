@@ -20,8 +20,8 @@ class RestaurantsList extends Component{
             showingRestaurants = this.props.locations
         }
 
-
         const updateQuery = this.props.updateQuery;
+        const showInfoWindow = this.props.showInfoWindow;
 
     return(
        
@@ -38,7 +38,8 @@ class RestaurantsList extends Component{
 
             <ul id="restaurants">
                 {showingRestaurants.map((location) => (
-                    <li key={location.title}>
+                    <li key={location.title}
+                        onClick={() => showInfoWindow(location)}>
                         {location.title}
                     </li>
                 ))}

@@ -22,6 +22,18 @@ class App extends React.Component {
     query: ''
   };
 
+  showInfoWindow = (targetLocation) => {
+    const locations = [...this.state.locations];
+    locations.map(location => {
+      if(location.title === targetLocation.title) {
+        location.clicked = true;
+      } else {
+        location.clicked = false;
+      }
+    })
+    this.setState(locations)
+  }
+
   updateQuery = (query) => {
       this.setState({ query: query.trim() })
   }  
@@ -33,10 +45,12 @@ render() {
         locations={this.state.locations}
         query={this.state.query}
         updateQuery={this.updateQuery}
+        showInfoWindow={this.showInfoWindow}
         />
       <Map 
         locations={this.state.locations}
         query={this.state.query}
+        showInfoWindow={this.showInfoWindow}
       />
       </div>)
     }

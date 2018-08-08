@@ -48,14 +48,12 @@ class Map extends Component{
       }
   
       //add markers and events on them 
-      var markers = [];
       var infowindow = new window.google.maps.InfoWindow();
       var defaultIcon = this.makeMarkerIcon('0091ff');
       var highlightedIcon = this.makeMarkerIcon('FFFF24');   
       var query = newProps.query;
   
-      this.props.locations.filter((location) =>  {
-        console.log(query)
+      newProps.locations.filter((location) =>  {
         if(query === '') {
            return true;
         }
@@ -68,9 +66,13 @@ class Map extends Component{
           icon: defaultIcon,
           animation: window.google.maps.Animation.DROP
         });
-              
+        
+        if(location.clicked) {
+          populateInfoWindow(marker, infowindow);
+        }
+
         marker.addListener('click', function() {
-          populateInfoWindow(this, infowindow); 
+          newProps.showInfoWindow(location); 
         });
         
         marker.addListener('mouseover', function() {
@@ -78,8 +80,6 @@ class Map extends Component{
         });
         marker.addListener('mouseout', function() {
           this.setIcon(defaultIcon);
-          
-        //markers.push(marker);
         })
       })
     } else {
