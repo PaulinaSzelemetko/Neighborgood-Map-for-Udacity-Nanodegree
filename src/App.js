@@ -1,6 +1,7 @@
 import React from 'react'
 import './App.css'
 import Map from './Map'
+import RestaurantsList from './RestaurantsList'
 
 class App extends React.Component {
 
@@ -18,7 +19,10 @@ class App extends React.Component {
 
 render() {
     return (
-      <Map locations={this.state.locations}/>)
+      <div id="app">
+      <RestaurantsList locations={this.state.locations}/>
+      <Map locations={this.state.locations}/>
+      </div>)
     }
 
 }

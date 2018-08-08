@@ -25,18 +25,6 @@ class Map extends Component{
     return markerImage;
   }
 
-//NOWA FUNKCJA
-  populateInfoWindow(marker, infowindow) {
-    if (infowindow.marker != marker) {
-      infowindow.marker = marker;
-      infowindow.setContent('<div>' + marker.title + '</div>');
-      infowindow.open();
-      infowindow.addListener('closeclick',function(){
-        infowindow.setMarker = null;
-      });
-    }
-    return infowindow;
-  }
 
   componentWillReceiveProps({isScriptLoadSucceed}){
     if (isScriptLoadSucceed) {
@@ -49,6 +37,18 @@ class Map extends Component{
   } else {
     alert("script not loaded")
   }       
+
+
+  const populateInfoWindow = (marker, infowindow) => {
+    if (infowindow.marker != marker) {
+      infowindow.marker = marker;
+      infowindow.setContent('<div>' + marker.name + '</div>');
+      infowindow.open(map, marker);
+      infowindow.addListener('closeclick',function(){
+        infowindow.setMarker = null;
+      });
+    }
+  }
 
   //add markers and events on them (changing color)
   var markers = [];
@@ -70,7 +70,7 @@ class Map extends Component{
 
     //NOWY CLICK
     marker.addListener('click', function() {
-      this.populateInfoWindow(this, infowindow); 
+      populateInfoWindow(this, infowindow); 
     });
 
     marker.addListener('mouseover', function() {

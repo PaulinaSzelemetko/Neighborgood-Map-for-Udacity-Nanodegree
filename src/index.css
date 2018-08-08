@@ -12,3 +12,34 @@ body {
   right: 0px;
 }
 
+#list {
+  background: #262626;
+  height: 100%;
+  left: 0px;
+  width: 350px;
+  position: absolute;
+  padding-left: 50px;
+}
+
+h3 {
+  color: white;
+  font-weight: 50;
+  font-size: 1.2em;
+}
+
+#input {
+  width: 245px;
+}
+
+ul, li {
+  color: white;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  padding-top: 20px;
+}
