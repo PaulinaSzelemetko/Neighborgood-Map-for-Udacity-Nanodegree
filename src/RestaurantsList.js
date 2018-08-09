@@ -8,7 +8,13 @@ class RestaurantsList extends Component{
      
     constructor(props) {
       super(props);
+      this.state = { rightMenu: false }
+      this.showRight = this.showRight.bind(this);
      }     
+
+    showRight = () => {
+        this.setState({ rightMenu: !this.state.rightMenu })
+      }
 
 
     render(){
@@ -24,8 +30,9 @@ class RestaurantsList extends Component{
         const showInfoWindow = this.props.showInfoWindow;
 
     return(
-       
-       <div id="list">
+     <div id="side-bar">
+        <button id="icon" onClick={this.showRight}><img src="icon.png"/></button>
+        <div className={ this.state.rightMenu ? "sideBarDisplay" : "sideBarDisplayNone"} ref={right => this.right = right} alignment="right">
             <h3>10 best restaurants in Warsaw</h3>
             <div id="searching">
                 <input 
@@ -44,7 +51,8 @@ class RestaurantsList extends Component{
                     </li>
                 ))}
             </ul>
-       </div>
+        </div>
+    </div>
     )
     }  
 }  

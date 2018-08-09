@@ -7,18 +7,19 @@ body {
 #map {
   bottom:0px;
   height: 100%;
-  left: 350px;
+  left: 0px;
   position: absolute;
   right: 0px;
+  top: 0px;
+  z-index: -1;
 }
 
 #list {
   background: #262626;
   height: 100%;
   left: 0px;
-  width: 350px;
+  width: 200px;
   position: absolute;
-  padding-left: 50px;
 }
 
 h3 {
@@ -28,8 +29,30 @@ h3 {
   padding: 15px 0;
 }
 
+.sideBarDisplay{ 
+  display: block;
+  height: 100%;
+  background: #262626;
+  height: 100%;
+  left: 0px;
+  width: 200px;
+  position: absolute;
+  padding-left: 50px;
+  font-size: 0.9em;
+}
+
+.sideBarDisplayNone{ 
+  display: none
+} 
+
+#icon {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+}
+
 #input {
-  width: 255px;
+  width: 150px;
 }
 
 ul, li {
@@ -42,5 +65,61 @@ ul {
 }
 
 li {
+  padding-top: 12px;
+  cursor: pointer;
+}
+
+
+
+@media screen and (min-width: 800px) {
+
+
+#map {
+  bottom:0px;
+  height: 100%;
+  left: 400px;
+  right: 0px;
+}
+
+.sideBarDisplay{ 
+  height: 100%;
+  left: 0px;
+  width: 350px;
+  position: absolute;
+  padding-left: 50px;
+}
+
+li {
   padding-top: 20px;
+}
+
+.sideBarDisplay{ 
+  display: block;
+  height: 100%;
+  background: #262626;
+  height: 100%;
+  left: 0px;
+  width: 350px;
+  position: absolute;
+  padding-left: 50px;
+  font-size: 1.1em;
+}
+
+#icon {
+  display: none;
+}
+
+.sideBarDisplayNone{ 
+  display: block;
+  height: 100%;
+  background: #262626;
+  height: 100%;
+  left: 0px;
+  width: 350px;
+  position: absolute;
+  padding-left: 50px;
+  font-size: 1.1em;
+} 
+
+
 }

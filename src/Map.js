@@ -31,7 +31,7 @@ class Map extends Component{
     
     //loading map 
       var map = new window.google.maps.Map(document.getElementById('map'), {
-        zoom: 12.8,
+        zoom: 12,
         center: {lat: 52.226972, lng: 21.003192}
       });  
       //add info windows
@@ -44,7 +44,7 @@ class Map extends Component{
           infowindow.addListener('closeclick', function(){
             infowindow.setMarker = null;
           });
-        }
+          }
       }
   
       //add markers and events on them 

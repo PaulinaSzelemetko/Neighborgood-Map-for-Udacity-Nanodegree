@@ -3,6 +3,7 @@ import './App.css'
 import Map from './Map'
 import RestaurantsList from './RestaurantsList'
 
+
 class App extends React.Component {
 
   state = {
