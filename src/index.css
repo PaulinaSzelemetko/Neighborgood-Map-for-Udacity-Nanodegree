@@ -70,9 +70,28 @@ li {
 }
 
 
+@media screen and (min-width: 600px) {
+  #icon {
+    display: none;
+  }
+  
+  .sideBarDisplayNone{ 
+    display: block;
+    height: 100%;
+    background: #262626;
+    height: 100%;
+    left: 0px;
+    width: 200px;
+    position: absolute;
+    padding-left: 50px;
+  } 
 
-@media screen and (min-width: 800px) {
 
+}
+
+
+
+@media screen and (min-width: 1024px) {
 
 #map {
   bottom:0px;
@@ -121,5 +140,10 @@ li {
   font-size: 1.1em;
 } 
 
+#input {
+  width: 280px;
+}
 
 }
+
+

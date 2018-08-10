@@ -16,6 +16,12 @@ class RestaurantsList extends Component{
         this.setState({ rightMenu: !this.state.rightMenu })
       }
 
+    hideRight = () => {
+        this.setState({ rightMenu: false})
+    }
+
+       
+
 
     render(){
         let showingRestaurants
@@ -26,11 +32,12 @@ class RestaurantsList extends Component{
             showingRestaurants = this.props.locations
         }
 
+        const hideRight = this.hideRight;
         const updateQuery = this.props.updateQuery;
         const showInfoWindow = this.props.showInfoWindow;
 
     return(
-     <div id="side-bar">
+     <div id="side-bar" role="complementary" tabIndex="0">
         <button id="icon" onClick={this.showRight}><img src="icon.png"/></button>
         <div className={ this.state.rightMenu ? "sideBarDisplay" : "sideBarDisplayNone"} ref={right => this.right = right} alignment="right">
             <h3>10 best restaurants in Warsaw</h3>
@@ -38,15 +45,18 @@ class RestaurantsList extends Component{
                 <input 
                     id ="input" 
                     type="text" 
+                    role="search"
+                    tabIndex="1"
+                    aria-labelledby="search for restaurants"
                     placeholder="Filter..." 
                     value={this.props.query} 
                     onChange ={(event) => updateQuery(event.target.value)}/>
             </div>
 
-            <ul id="restaurants">
+            <ul id="restaurants" aria-labelledby="list of restaurants">
                 {showingRestaurants.map((location) => (
-                    <li key={location.title}
-                        onClick={() => showInfoWindow(location)}>
+                    <li key={location.title} area-labelledby={location.title}
+                        onClick={() => {showInfoWindow(location); hideRight()}}>
                         {location.title}
                     </li>
                 ))}

@@ -41,12 +41,13 @@ class App extends React.Component {
 
 render() {
     return (
-      <div id="app">
+      <div id="app" role="main">
       <RestaurantsList 
         locations={this.state.locations}
         query={this.state.query}
         updateQuery={this.updateQuery}
         showInfoWindow={this.showInfoWindow}
+        role="complementary"
         />
       <Map 
         locations={this.state.locations}

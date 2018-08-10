@@ -40,6 +40,7 @@ class Map extends Component{
           infowindow.marker = marker;
           infowindow.setContent('<div>' + marker.name + '</div>');
           infowindow.open(map, marker);
+          marker.setIcon(highlightedIcon);
   
           infowindow.addListener('closeclick', function(){
             infowindow.setMarker = null;
@@ -92,7 +93,7 @@ class Map extends Component{
   render(){
     return(
       <div>
-        <div id="map"></div>
+        <div id="map" role="application" tabIndex="-1"></div>
     </div>        
     )
   }  
