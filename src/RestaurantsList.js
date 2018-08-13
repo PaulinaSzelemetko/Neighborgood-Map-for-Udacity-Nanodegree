@@ -4,7 +4,6 @@ import sortBy from 'sort-by'
 
 
 class RestaurantsList extends Component{
-
      
     constructor(props) {
       super(props);
@@ -18,10 +17,7 @@ class RestaurantsList extends Component{
 
     hideRight = () => {
         this.setState({ rightMenu: false})
-    }
-
-       
-
+    }    
 
     render(){
         let showingRestaurants

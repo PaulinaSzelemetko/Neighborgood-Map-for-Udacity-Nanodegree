@@ -20,19 +20,13 @@ class App extends React.Component {
         {title: 'Platter by Karol Okrasa', location: {lat: 52.232470, lng: 21.002796}},
         {title: 'Borpince', location: {lat: 52.232532, lng: 21.014322}}
     ],
-    query: ''
+    query: '',
+    clickedLocation: ''
   };
 
   showInfoWindow = (targetLocation) => {
-    const locations = [...this.state.locations];
-    locations.map(location => {
-      if(location.title === targetLocation.title) {
-        location.clicked = true;
-      } else {
-        location.clicked = false;
-      }
-    })
-    this.setState(locations)
+    let newState =  { clickedLocation: targetLocation.title};
+    this.setState(newState)
   }
 
   updateQuery = (query) => {
@@ -52,6 +46,7 @@ render() {
       <Map 
         locations={this.state.locations}
         query={this.state.query}
+        clickedLocation={this.state.clickedLocation}
         showInfoWindow={this.showInfoWindow}
       />
       </div>)
