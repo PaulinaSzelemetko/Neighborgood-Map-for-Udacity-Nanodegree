@@ -107,9 +107,11 @@ class Map extends Component{
       }
 
       markers = markers.map(marker =>  {
-        if(query === '' 
-          || marker.name.toLowerCase().includes(query.toLowerCase())) {
-            marker.setMap(map);
+        if(query === '' || 
+          marker.name.toLowerCase().includes(query.toLowerCase())) {
+            if(marker.map === null) {
+              marker.setMap(map);
+            }
         } else {
           marker.setMap(null);
         }
