@@ -2,16 +2,21 @@ import React, { Component } from 'react';
 import scriptLoader from 'react-async-script-loader';
 
 
-
+const foursquare = require('react-foursquare')({
+  clientID: '0PRP0H0FLFBQTQXZRFMYEIPEQK1FRD42ZI0AGW2N3F23B3KQ',
+  clientSecret: '5DFMAE5PU01K500W11BUCRYBSWM0UN4O2TM13UAH4LIHP0KT'
+});
 
 class Map extends Component{
+  
+  state = {
+    map: null,
+    tips: []
+  }
 
-    
   constructor(props) {
     super(props);
-   }        
-              
-    // ADD MAP AND MARKERS   
+  }           
     
   //function making marker color 
   makeMarkerIcon (markerColor) {
@@ -25,20 +30,65 @@ class Map extends Component{
     return markerImage;
   }
 
-
   componentWillReceiveProps(newProps){
+    const newState = {}
+    let map = {}
+    let markers = [];
+    let tips = [];
+    const params = {'venue_id': newProps.locations.venueID};
+
     if (newProps.isScriptLoadSucceed) {
     
-    //loading map 
-      var map = new window.google.maps.Map(document.getElementById('map'), {
-        zoom: 12,
-        center: {lat: 52.226972, lng: 21.003192}
-      });  
+    //loading map
+      if(this.state.map) {
+        map = this.state.map;
+      } else {  
+        //create map
+        map = new window.google.maps.Map(document.getElementById('map'), {
+          zoom: 12,
+          center: {lat: 52.226972, lng: 21.003192}
+        }); 
+        
+        newProps.locations.forEach(location => {
+            
+            foursquare.venues.getVenueTips(params).then((response) => {
+                 tips.push({text: response.response.tips.items[0].text, title: location.title})
+            }).then(() => this.setState({tips})).catch(e=>console.log(e))
+        })
+       
+        newProps.locations.map(location => {
+          var marker = new window.google.maps.Marker({
+            position: location.location,
+            name : location.title,
+            map: map,
+            icon: defaultIcon,
+            animation: window.google.maps.Animation.DROP
+          });
+  
+          marker.addListener('click', function() {
+            newProps.showInfoWindow(location); 
+          });
+          
+          marker.addListener('mouseover', function() {
+            this.setIcon(highlightedIcon);
+          });
+          marker.addListener('mouseout', function() {
+            this.setIcon(defaultIcon);
+          })
+
+          markers.push(marker);
+          
+        })
+        newState.map = map;
+        newState.markers = markers;
+        this.setState(newState);
+      }
+
       //add info windows
       const populateInfoWindow = (marker, infowindow) => {
         if (infowindow.marker != marker) {
           infowindow.marker = marker;
-          infowindow.setContent('<div>' + marker.name + '</div>');
+          infowindow.setContent(<div> <p>${this.state.tips[0].text}</p> </div>);
           infowindow.open(map, marker);
           marker.setIcon(highlightedIcon);
   
