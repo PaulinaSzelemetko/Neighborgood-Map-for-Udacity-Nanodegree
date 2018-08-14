@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import scriptLoader from 'react-async-script-loader';
 
-
+//foursquare data
 const foursquare = require('react-foursquare')({
   clientID: '0PRP0H0FLFBQTQXZRFMYEIPEQK1FRD42ZI0AGW2N3F23B3KQ',
   clientSecret: '5DFMAE5PU01K500W11BUCRYBSWM0UN4O2TM13UAH4LIHP0KT'
@@ -32,6 +32,8 @@ class Map extends Component{
     return markerImage;
   }
 
+
+  //function making info windows and adding content to them
   populateInfoWindow = (marker, infoWindow, map) => {
     
     let tips = this.state.tips;
@@ -56,6 +58,8 @@ class Map extends Component{
     let tips = [];
     let locations = this.props.locations;
 
+
+    //getting response from foursquare api
     locations.forEach(location => {      
       let params = {venue_id: location.venueID};
       foursquare.venues.getVenueTips(params).then((response) => {
@@ -85,12 +89,13 @@ class Map extends Component{
         markers = this.state.markers;
         infoWindow = this.state.infoWindow;
       } else {  
-        //create map
+        //creating map
         map = new window.google.maps.Map(document.getElementById('map'), {
           zoom: 12,
           center: {lat: 52.226972, lng: 21.003192}
         }); 
                         
+        //creating markers and adding events on them
         locations.map(location => {
           var marker = new window.google.maps.Marker({
             position: location.location,
@@ -118,6 +123,8 @@ class Map extends Component{
         infoWindow = new window.google.maps.InfoWindow();
       }
 
+
+      //searching and filtering restaurants
       markers = markers.map(marker =>  {
         if(query === '' || 
           marker.name.toLowerCase().includes(query.toLowerCase())) {

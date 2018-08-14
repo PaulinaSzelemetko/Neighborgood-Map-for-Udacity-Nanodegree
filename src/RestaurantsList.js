@@ -11,6 +11,7 @@ class RestaurantsList extends Component{
       this.showRight = this.showRight.bind(this);
      }     
 
+    //function showing and hiding side menu with restaurants list
     showRight = () => {
         this.setState({ rightMenu: !this.state.rightMenu })
       }

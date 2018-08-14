@@ -1,6 +1,6 @@
 # Neighborhood-Map-React
 
-It is a single page app uses React and Google maps API to list my favorite restaurants in Warsaw (Poland). 
+It is a single page app uses React, Google maps API and Foursquare API to list my favorite restaurants in Warsaw (Poland). 
 This project was built for Udacity and Google Nanodegree
 
 ## How to start the app?
