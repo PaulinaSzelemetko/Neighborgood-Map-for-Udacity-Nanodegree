@@ -33,10 +33,18 @@ class Map extends Component{
   }
 
   populateInfoWindow = (marker, infoWindow, map) => {
+    
+    let tips = this.state.tips;
+
     if (infoWindow.marker != marker) {
       infoWindow.marker = marker;
-      infoWindow.setContent(marker.name);
-      //infowindow.setContent(<div> <p>${this.state.tips[0].text}</p> </div>);
+      tips = tips.filter((tip) => tip.title === marker.name);
+      infoWindow.setContent(`
+          <div>
+            <p>${marker.name}</p>
+            <p>${tips[0] ? tips[0].text : "No tips for this restaurant"}</p>
+          </div>`
+        );
       infoWindow.open(map, marker);
       infoWindow.addListener('closeclick', function(){
         infoWindow.setMarker = null;
@@ -44,19 +52,29 @@ class Map extends Component{
     }
   }
       
+  componentDidMount( ) {
+    let tips = [];
+    let locations = this.props.locations;
+
+    locations.forEach(location => {      
+      let params = {venue_id: location.venueID};
+      foursquare.venues.getVenueTips(params).then((response) => {
+        tips.push({text: response.response.tips.items[0].text, title: location.title})
+      }).then(() => this.setState({tips})).catch(e=>console.log(e))
+    })
+  }
+
+
   componentWillReceiveProps(newProps){
     const newState = {}
 
     let map = {}
     let markers = [];
     let infoWindow = {};
-    
-    let tips = [];
 
     let query = newProps.query;
     let locations = newProps.locations;
-
-    const params = {'venue_id': newProps.locations.venueID};
+    
     const defaultIcon = this.makeMarkerIcon('0091ff');
     const highlightedIcon = this.makeMarkerIcon('FFFF24');   
         
@@ -72,13 +90,7 @@ class Map extends Component{
           zoom: 12,
           center: {lat: 52.226972, lng: 21.003192}
         }); 
-        
-        locations.forEach(location => {          
-          foursquare.venues.getVenueTips(params).then((response) => {
-            tips.push({text: response.response.tips.items[0].text, title: location.title})
-          }).then(() => this.setState({tips})).catch(e=>console.log(e))
-        })
-        
+                        
         locations.map(location => {
           var marker = new window.google.maps.Marker({
             position: location.location,
@@ -99,7 +111,7 @@ class Map extends Component{
           marker.addListener('mouseout', function() {
             this.setIcon(defaultIcon);
           })
-
+          
           markers.push(marker);
         });
 
