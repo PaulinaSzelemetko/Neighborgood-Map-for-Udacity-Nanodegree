@@ -17,8 +17,8 @@ class App extends React.Component {
         {title: 'MEZZE hummus & falafel', venueID: '52489a0911d200b001fa7fd1', location: {lat: 52.203477, lng: 21.022602}},
         {title: 'Atelier Amaro', venueID: '4e738918b0fb38bb72f02590', location: {lat: 52.218920, lng: 21.026988}},
         {title: 'Pełną Parą', venueID: '54d643ae498e84070438a7e5', location: {lat: 52.23048573788216, lng: 20.99445480101361}},
-        {title: 'Platter by Karol Okrasa', location: {lat: 52.232470, lng: 21.002796}},
-        {title: 'Borpince', venueID: '56b70131498e57060c549e00', location: {lat: 52.232532, lng: 21.014322}}
+        {title: 'Platter by Karol Okrasa', venueID: '5008648ee4b05525ca864aef', location: {lat: 52.232470, lng: 21.002796}},
+        {title: 'Borpince', venueID: '4c6312434b5176b0c0380e17', location: {lat: 52.232532, lng: 21.014322}}
        ],
     query: '',
     clickedLocation: ''

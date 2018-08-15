@@ -3,8 +3,8 @@ import scriptLoader from 'react-async-script-loader';
 
 //foursquare data
 const foursquare = require('react-foursquare')({
-  clientID: '',//'0PRP0H0FLFBQTQXZRFMYEIPEQK1FRD42ZI0AGW2N3F23B3KQ',
-  clientSecret: ''//'5DFMAE5PU01K500W11BUCRYBSWM0UN4O2TM13UAH4LIHP0KT'
+  clientID: '0PRP0H0FLFBQTQXZRFMYEIPEQK1FRD42ZI0AGW2N3F23B3KQ',
+  clientSecret: '5DFMAE5PU01K500W11BUCRYBSWM0UN4O2TM13UAH4LIHP0KT'
 });
 
 window.gm_authFailure = () => { const mapSection = document.querySelector('#map'); mapSection.innerHTML = 'Sorry but we were unable to load the map. Please try again later.';}
