@@ -3,9 +3,11 @@ import scriptLoader from 'react-async-script-loader';
 
 //foursquare data
 const foursquare = require('react-foursquare')({
-  clientID: '0PRP0H0FLFBQTQXZRFMYEIPEQK1FRD42ZI0AGW2N3F23B3KQ',
-  clientSecret: '5DFMAE5PU01K500W11BUCRYBSWM0UN4O2TM13UAH4LIHP0KT'
+  clientID: '',//'0PRP0H0FLFBQTQXZRFMYEIPEQK1FRD42ZI0AGW2N3F23B3KQ',
+  clientSecret: ''//'5DFMAE5PU01K500W11BUCRYBSWM0UN4O2TM13UAH4LIHP0KT'
 });
+
+window.gm_authFailure = () => { const mapSection = document.querySelector('#map'); mapSection.innerHTML = 'Sorry but we were unable to load the map. Please try again later.';}
 
 class Map extends Component{
   
@@ -15,10 +17,6 @@ class Map extends Component{
     infoWindow: {},
     markers: []
   }
-
-  constructor(props) {
-    super(props);
-  }           
 
   //function making marker color 
   makeMarkerIcon (markerColor) {
@@ -38,33 +36,40 @@ class Map extends Component{
     
     let tips = this.state.tips;
 
-    if (infoWindow.marker != marker) {
+    if (infoWindow.marker !== marker) {
       infoWindow.marker = marker;
       tips = tips.filter((tip) => tip.title === marker.name);
       infoWindow.setContent(`
           <div>
             <p>${marker.name}</p>
-            <p>${tips[0] ? tips[0].text : "No tips for this restaurant"}</p>
+            <p>${tips[0] ? tips[0].text : "Sorry, we were unable to retrieve tips for this restaurant."}</p>
           </div>`
         );
       infoWindow.open(map, marker);
       infoWindow.addListener('closeclick', function(){
-        infoWindow.setMarker = null;
+      infoWindow.setMarker = null;
       });
     }
+  }
+
+  componenetDidCatch(error, info) {
+
   }
       
   componentDidMount( ) {
     let tips = [];
     let locations = this.props.locations;
 
-
     //getting response from foursquare api
     locations.forEach(location => {      
-      let params = {venue_id: location.venueID};
+      let params = {'venue_id': location.venueID};
       foursquare.venues.getVenueTips(params).then((response) => {
-        tips.push({text: response.response.tips.items[0].text, title: location.title})
-      }).then(() => this.setState({tips})).catch(e=>console.log(e))
+        tips.push({
+          text: response.response.tips.items[0].text,
+           title: location.title})
+      })
+      .then(() => this.setState({tips}))
+      .catch(e => {})
     })
   }
 
@@ -79,8 +84,8 @@ class Map extends Component{
     let query = newProps.query;
     let locations = newProps.locations;
     
-    const defaultIcon = this.makeMarkerIcon('0091ff');
-    const highlightedIcon = this.makeMarkerIcon('FFFF24');   
+    let defaultIcon = {};
+    let highlightedIcon = {};   
         
     if (newProps.isScriptLoadSucceed) {    
     //loading map
@@ -94,9 +99,11 @@ class Map extends Component{
           zoom: 12,
           center: {lat: 52.226972, lng: 21.003192}
         }); 
-                        
+        
+        defaultIcon = this.makeMarkerIcon('0091ff');
+        highlightedIcon = this.makeMarkerIcon('FFFF24');
         //creating markers and adding events on them
-        locations.map(location => {
+        markers = locations.map(location => {
           var marker = new window.google.maps.Marker({
             position: location.location,
             name : location.title,
@@ -117,7 +124,7 @@ class Map extends Component{
             this.setIcon(defaultIcon);
           })
           
-          markers.push(marker);
+          return marker;
         });
 
         infoWindow = new window.google.maps.InfoWindow();
@@ -136,7 +143,10 @@ class Map extends Component{
         }
 
         if(marker.name === newProps.clickedLocation) {
+          marker.setAnimation(window.google.maps.Animation.BOUNCE);
           this.populateInfoWindow(marker, infoWindow, map);
+        } else {
+          marker.setAnimation(null);
         }
 
         return marker;
@@ -154,11 +164,12 @@ class Map extends Component{
   render(){ 
     return(
       <div>
-        <div id="map" role="application" tabIndex="-1"></div>
+        <div id="map" role="application">Sorry, there has been an error loading the map. Please try again later.</div>
     </div>        
     )
   }  
 }  
+
 
 // SCRIPT LOADER
 export default scriptLoader(

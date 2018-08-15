@@ -39,6 +39,7 @@ h3 {
   position: absolute;
   padding-left: 50px;
   font-size: 0.9em;
+  overflow: auto;
 }
 
 .sideBarDisplayNone{ 
@@ -84,6 +85,7 @@ li {
     width: 200px;
     position: absolute;
     padding-left: 50px;
+    overflow: auto;
   } 
 
 
@@ -106,6 +108,7 @@ li {
   width: 350px;
   position: absolute;
   padding-left: 50px;
+  overflow: auto;
 }
 
 li {
@@ -122,6 +125,7 @@ li {
   position: absolute;
   padding-left: 50px;
   font-size: 1.1em;
+  overflow: auto;
 }
 
 #icon {
@@ -138,6 +142,7 @@ li {
   position: absolute;
   padding-left: 50px;
   font-size: 1.1em;
+  overflow: auto;
 } 
 
 #input {

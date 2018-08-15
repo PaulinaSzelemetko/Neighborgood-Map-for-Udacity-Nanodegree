@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import escapeRegExp from 'escape-string-regexp'
-import sortBy from 'sort-by'
-
 
 class RestaurantsList extends Component{
      
@@ -34,8 +32,8 @@ class RestaurantsList extends Component{
         const showInfoWindow = this.props.showInfoWindow;
 
     return(
-     <div id="side-bar" role="complementary" tabIndex="0">
-        <button id="icon" onClick={this.showRight}><img src="icon.png"/></button>
+     <nav id="side-bar" role="complementary" tabIndex="0">
+        <button id="icon" onClick={this.showRight}><img src="icon.png" alt="hamburger menu icon"/></button>
         <div className={ this.state.rightMenu ? "sideBarDisplay" : "sideBarDisplayNone"} ref={right => this.right = right} alignment="right">
             <h3>10 best restaurants in Warsaw</h3>
             <div id="searching">
@@ -43,23 +41,23 @@ class RestaurantsList extends Component{
                     id ="input" 
                     type="text" 
                     role="search"
-                    tabIndex="1"
-                    aria-labelledby="search for restaurants"
+                    tabIndex="0"
+                    aria-labelledby="searching"
                     placeholder="Filter..." 
                     value={this.props.query} 
                     onChange ={(event) => updateQuery(event.target.value)}/>
             </div>
 
-            <ul id="restaurants" aria-labelledby="list of restaurants">
+            <ul id="restaurants" aria-labelledby="restaurants">
                 {showingRestaurants.map((location) => (
-                    <li key={location.title} area-labelledby={location.title}
+                    <li key={location.title} area-labelledby="restaurants" tabIndex="0" role="button" onKeyPress={() => {showInfoWindow(location); hideRight()}}
                         onClick={() => {showInfoWindow(location); hideRight()}}>
                         {location.title}
                     </li>
                 ))}
             </ul>
         </div>
-    </div>
+    </nav>
     )
     }  
 }  
