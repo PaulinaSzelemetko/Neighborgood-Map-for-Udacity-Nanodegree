@@ -11,7 +11,7 @@ class App extends React.Component {
       [
         {title: 'El Popo', venueID: '4bbb7e9bc585a5930750b6b7', location: {lat: 52.243552, lng: 21.007285}},  
         {title: 'Thaisty', venueID: '555082cd498e1ed2ce2c2cbd', location: {lat: 52.24297442972257, lng: 21.002883850918693}},
-        {title: 'Street', venueUD: '4e09f6bd8877394591f6cab8', location: {lat: 52.257631, lng: 20.984815}},
+        {title: 'Street', venueID: '4e09f6bd8877394591f6cab8', location: {lat: 52.257631, lng: 20.984815}},
         {title: 'Łuski i Ości', venueID: '54e78e91498e7116ea42dc0e', location: {lat: 52.261264, lng: 20.990815}},
         {title: 'N31 restaurant&bar', venueID: '562fcc8d498eebd6fb16ec1a', location: {lat: 52.229008, lng: 21.013060}},
         {title: 'MEZZE hummus & falafel', venueID: '52489a0911d200b001fa7fd1', location: {lat: 52.203477, lng: 21.022602}},

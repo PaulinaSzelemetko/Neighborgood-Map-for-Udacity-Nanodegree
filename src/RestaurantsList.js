@@ -42,7 +42,7 @@ class RestaurantsList extends Component{
                     type="text" 
                     role="search"
                     tabIndex="0"
-                    aria-labelledby="searching"
+                    aria-label="search"
                     placeholder="Filter..." 
                     value={this.props.query} 
                     onChange ={(event) => updateQuery(event.target.value)}/>
@@ -50,7 +50,7 @@ class RestaurantsList extends Component{
 
             <ul id="restaurants" aria-labelledby="restaurants">
                 {showingRestaurants.map((location) => (
-                    <li key={location.title} area-labelledby="restaurants" tabIndex="0" role="button" onKeyPress={() => {showInfoWindow(location); hideRight()}}
+                    <li key={location.title} aria-labelledby="restaurants" tabIndex="0" role="button" onKeyPress={() => {showInfoWindow(location); hideRight()}}
                         onClick={() => {showInfoWindow(location); hideRight()}}>
                         {location.title}
                     </li>
